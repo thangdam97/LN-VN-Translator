@@ -180,34 +180,30 @@ Dịch đoạn sau sang tiếng Việt:
 
 ```
 JP-VN/
-├── 📄 VN_TRANSLATOR_MASTER_INSTRUCTION_MINIFIED.xml  # Core logic (17KB)
+├── 📄 VN_TRANSLATOR_MASTER_INSTRUCTION_MINIFIED.xml  # Core logic (23KB)
 ├── 📄 README.md                                       # Tài liệu này
 ├── 📄 LICENSE                                         # GNU AGPLv3
 │
-├── 📚 Reference/ (Knowledge Base)
-│   ├── Core Modules (Bắt buộc)
-│   │   ├── 14_KANJI_KNOWLEDGE_BASE.md                # 12,559 Kanji + Hán-Việt
-│   │   ├── 03_SENSORY_LEXICON.md                     # Từ điển cảm giác
-│   │   └── 05_GOLDEN_SAMPLES.md                      # 19 mẫu dịch S-Tier
-│   │
-│   └── Extended Modules (Tùy chọn)
-│       ├── 00_LOCALIZATION_PRIMER_VN.md              # Hướng dẫn bản địa hóa
-│       ├── 01_VIETNAMESE_PRONOUN_SYSTEM.md           # Hệ thống đại từ
-│       ├── 01A_HYBRID_HONORIFIC_SYSTEM.md            # Kính ngữ hybrid
-│       ├── 02_BOLDNESS_MODULE_v1.0.md                # Module táo bạo
-│       ├── 04_FORMATTING_STANDARDS.md                # Chuẩn định dạng
-│       ├── 06_VISUAL_PROXEMICS_QUICK_REFERENCE.md    # Text-based Proxemics
-│       ├── 07_LONG_VOWEL_ROMANIZATION.md             # La-tinh hóa tên riêng
-│       ├── 08_ANTI_TRANSLATIONESE_GUARDRAILS.md      # Chống văn dịch
-│       ├── 09_THINKING_LOG_ICL.md                    # In-Context Learning
-│       ├── 10_REAL_WORLD_CRITIQUE_ICL.md             # Phê bình thực tế
-│       ├── 11_RUBY_TEXT_PARSING_ICL.md               # Xử lý Furigana
-│       ├── 12_SAFETY_COMPLIANCE_MATRIX.md            # Ma trận an toàn
-│       └── 13_COMMON_KANJI_SINO_VN.md                # Kanji thông dụng
-│
-└── 🔧 Utilities/
-    ├── VN_LN_Master_Prompt_v10.0_LIGHTWEIGHT.md      # Phiên bản nhẹ
-    └── KANJI_LOOKUP_VN.json                          # JSON lookup table
+└── 📚 Reference/ (Knowledge Base)
+    ├── Core Modules (Bắt buộc)
+    │   ├── 14_KANJI_KNOWLEDGE_BASE.md                # 12,559 Kanji + Hán-Việt
+    │   ├── 03_SENSORY_LEXICON.md                     # Từ điển cảm giác
+    │   └── 05_GOLDEN_SAMPLES.md                      # 19 mẫu dịch S-Tier
+    │
+    └── Extended Modules (Tùy chọn)
+        ├── 00_LOCALIZATION_PRIMER_VN.md              # Hướng dẫn bản địa hóa
+        ├── 01_VIETNAMESE_PRONOUN_SYSTEM.md           # Hệ thống đại từ
+        ├── 01A_HYBRID_HONORIFIC_SYSTEM.md            # Kính ngữ hybrid
+        ├── 02_BOLDNESS_MODULE_v1.0.md                # Module táo bạo
+        ├── 04_FORMATTING_STANDARDS.md                # Chuẩn định dạng
+        ├── 06_VISUAL_PROXEMICS_QUICK_REFERENCE.md    # Text-based Proxemics
+        ├── 07_LONG_VOWEL_ROMANIZATION.md             # La-tinh hóa tên riêng
+        ├── 08_ANTI_TRANSLATIONESE_GUARDRAILS.md      # Chống văn dịch
+        ├── 09_THINKING_LOG_ICL.md                    # In-Context Learning
+        ├── 10_REAL_WORLD_CRITIQUE_ICL.md             # Phê bình thực tế
+        ├── 11_RUBY_TEXT_PARSING_ICL.md               # Xử lý Furigana
+        ├── 12_SAFETY_COMPLIANCE_MATRIX.md            # Ma trận an toàn
+        └── 13_COMMON_KANJI_SINO_VN.md                # Kanji thông dụng
 ```
 
 ---
