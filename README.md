@@ -6,7 +6,7 @@
 ![Light Novel](https://img.shields.io/badge/Domain-Light%20Novel-ff69b4)
 ![Transcreation](https://img.shields.io/badge/Method-Transcreation-success)
 
-> **"S-Tier Light Novel Localization System driven by Gemini Large-Language Model"**
+> **"Light Novel Localization System driven by Gemini Large-Language Model"**
 
 ---
 
