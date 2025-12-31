@@ -304,6 +304,205 @@
     </RULE>
     <BAN>NEVER output format: text ぁ (aa) - always convert to natural VN!</BAN>
   </TRAILING_SOUNDS>
+
+  <RUBY_PARSING version="2.0" source="11_RUBY_TEXT_PARSING_ICL.md">
+    <PHILOSOPHY>Ruby text is TRUTH for pronunciation. Never merge unrelated kanji.</PHILOSOPHY>
+    
+    <CORE_PRINCIPLES>
+      <PRINCIPLE_1>Separate each kanji-ruby pair individually</PRINCIPLE_1>
+      <PRINCIPLE_2>Never merge kanji without shared ruby</PRINCIPLE_2>
+      <PRINCIPLE_3>Handle repeater mark 々 as duplicate of previous kanji</PRINCIPLE_3>
+      <PRINCIPLE_4>Clean output - NO ruby format leakage</PRINCIPLE_4>
+    </CORE_PRINCIPLES>
+    
+    <PARSING_RULES>
+      <RULE type="NAME_PARSING">
+        <EXAMPLE>
+          INPUT: 綿月(わたぬき)凛(りん)
+          CORRECT: Watanuki Rin (surname + given name separated)
+          WRONG: Watanukin (merged), 凛(rin)然(zen) (added non-existent kanji)
+        </EXAMPLE>
+        <ACTION>Parse surname and given name as separate units</ACTION>
+      </RULE>
+      
+      <RULE type="REPEATER_KANJI">
+        <PATTERN>々 repeats the previous kanji</PATTERN>
+        <EXAMPLES>
+          凛々 = りんりん (rin + rin) → Rinrin
+          時々 = ときどき (toki + doki) → Tokidoki
+          色々 = いろいろ (iro + iro) → Iroiro
+        </EXAMPLES>
+        <BAN>NEVER translate 々 as a standalone kanji!</BAN>
+      </RULE>
+      
+      <RULE type="BOUNDARY_DETECTION">
+        <PROBLEM>Accidentally merging adjacent but unrelated kanji</PROBLEM>
+        <EXAMPLE>
+          INPUT: その凛(りん)とした姿
+          PARSE:
+            - その = "that"
+            - 凛(りん)とした = "dignified/cold"
+            - 姿 = "appearance"
+          CORRECT: "dáng vẻ kiêu sa đó"
+          WRONG: "tiền bối凛(rin)然(zen) đó" - Merged 凛 with 然!
+        </EXAMPLE>
+        <ACTION>Verify word boundaries before processing</ACTION>
+      </RULE>
+      
+      <RULE type="COMPOUND_WORDS">
+        <PRINCIPLE>Translate meaning, not individual kanji</PRINCIPLE>
+        <EXAMPLE>
+          INPUT: 高校生(こうこうせい)
+          CORRECT: "học sinh cao trung" or "học sinh cấp 3"
+          WRONG: "cao(high)-trường(school)-sinh(student)" - Literal per-kanji
+        </EXAMPLE>
+      </RULE>
+    </PARSING_RULES>
+    
+    <OUTPUT_RULES>
+      <RULE type="PROPER_NAMES">
+        <ACTION>Output clean romanji only</ACTION>
+        <EXAMPLE>
+          INPUT: 凛(りん)
+          CORRECT: "Rin"
+          WRONG: "凛 (rin)" or "りん"
+        </EXAMPLE>
+      </RULE>
+      
+      <RULE type="COMMON_TERMS">
+        <ACTION>Translate to Vietnamese meaning</ACTION>
+        <EXAMPLE>
+          INPUT: 高校生
+          OUTPUT: "học sinh cao trung" (NOT kanji, NOT romanji)
+        </EXAMPLE>
+      </RULE>
+      
+      <RULE type="NO_FORMAT_LEAK">
+        <BAN>NEVER let kanji(furigana) format leak into final output</BAN>
+        <SEVERITY>CRITICAL - Makes translation look unfinished</SEVERITY>
+      </RULE>
+    </OUTPUT_RULES>
+    
+    <TL_NOTE_SYSTEM>
+      <WHEN_TO_USE>
+        <TRIGGER>Cultural terms with no Vietnamese equivalent</TRIGGER>
+        <TRIGGER>Proper nouns requiring context</TRIGGER>
+        <TRIGGER>When literal translation would be nonsensical</TRIGGER>
+      </WHEN_TO_USE>
+      
+      <EXAMPLES>
+        <CULTURAL_ENTERTAINMENT>
+          宝塚 → Takarazuka [TL: Famous all-female theater troupe in Japan]
+          歌舞伎 → Kabuki [TL: Traditional Japanese theater]
+        </CULTURAL_ENTERTAINMENT>
+        
+        <SCHOOL_TERMS>
+          先輩/後輩 → Senpai/Kouhai [TL: Senior/Junior in school/work]
+          帰宅部 → Kitakubu [TL: "Go-home club" - students not in any club]
+        </SCHOOL_TERMS>
+        
+        <FOOD>
+          おでん → Oden [TL: Japanese hot pot dish]
+          たこ焼き → Takoyaki [TL: Octopus ball snacks]
+        </FOOD>
+        
+        <OTAKU>
+          異世界 → Isekai [TL: Another world/parallel world genre]
+          チート → Cheat [TL: Overpowered ability in games/novels]
+        </OTAKU>
+      </EXAMPLES>
+      
+      <FORMAT>
+        INLINE: "Như diễn viên Takarazuka* vậy."
+        [End of paragraph]
+        *TL: Takarazuka - Famous all-female theater troupe in Japan.
+        
+        FOOTNOTE (multiple terms):
+        [End of chapter]
+        ---
+        📝 TRANSLATOR'S NOTES:
+        - Takarazuka: Famous all-female theater troupe
+        - Senpai: Senior/upperclassman
+        - Kitakubu: "Go-home club" - students not in clubs
+      </FORMAT>
+      
+      <DECISION_FLOWCHART>
+        Encounter unfamiliar term
+               ↓
+        Has VN equivalent? ──YES──→ Translate normally
+               │NO
+               ↓
+        Is it proper name? ──YES──→ Clean romanji (no TL Note)
+               │NO
+               ↓
+        JP-specific culture? ──YES──→ Romanji + TL Note
+               │NO
+               ↓
+        Literal translation OK? ──YES──→ Translate meaning
+               │NO
+               ↓
+        Romanji + TL Note
+      </DECISION_FLOWCHART>
+    </TL_NOTE_SYSTEM>
+    
+    <COMMON_ERRORS>
+      <ERROR type="BOUNDARY_MERGE">
+        <WRONG>凛(rin)然(zen) - Merging unrelated kanji</WRONG>
+        <CORRECT>Rin (only 凛)</CORRECT>
+        <SEVERITY>CRITICAL - Creates non-existent words</SEVERITY>
+      </ERROR>
+      
+      <ERROR type="FORMAT_LEAK">
+        <WRONG>"tiền bối凛(rin)" - Ruby format in output</WRONG>
+        <CORRECT>"tiền bối Rin"</CORRECT>
+        <SEVERITY>HIGH - Unprofessional output</SEVERITY>
+      </ERROR>
+      
+      <ERROR type="WRONG_TRANSLATION">
+        <WRONG>"kịch Bảo mẫu" for 宝塚</WRONG>
+        <CORRECT>"Takarazuka" (proper noun)</CORRECT>
+        <SEVERITY>CRITICAL - Completely wrong meaning</SEVERITY>
+      </ERROR>
+      
+      <ERROR type="LITERAL_KANJI">
+        <WRONG>"cao-trường-sinh" for 高校生</WRONG>
+        <CORRECT>"học sinh cao trung"</CORRECT>
+        <SEVERITY>MEDIUM - Unnatural phrasing</SEVERITY>
+      </ERROR>
+    </COMMON_ERRORS>
+    
+    <PROCESSING_WORKFLOW>
+      1. DETECT: Find all kanji with ruby annotations
+      2. PARSE: Separate each kanji-ruby pair
+      3. VERIFY: Check word boundaries
+      4. TRANSLATE: Romanize/translate based on context
+      5. CLEAN: Remove ruby format from output
+      6. VALIDATE: Ensure no stray Japanese characters
+    </PROCESSING_WORKFLOW>
+    
+    <CHECKLIST>
+      <PRE_TRANSLATION>
+        - [ ] Identify all kanji-ruby pairs in sentence
+        - [ ] Distinguish word boundaries
+        - [ ] Check for repeater marks (々)
+        - [ ] Determine compound word meanings
+      </PRE_TRANSLATION>
+      
+      <DURING_TRANSLATION>
+        - [ ] Translate by meaning, not per-kanji
+        - [ ] Keep proper names as clean romanji
+        - [ ] Never merge unrelated kanji
+        - [ ] Remove ruby format from output
+      </DURING_TRANSLATION>
+      
+      <POST_TRANSLATION>
+        - [ ] No Japanese characters remain (except exceptions)
+        - [ ] Proper names in clean romanji
+        - [ ] No kanji(furigana) format leakage
+        - [ ] TL Notes added for cultural terms
+      </POST_TRANSLATION>
+    </CHECKLIST>
+  </RUBY_PARSING>
 </LOC>
 
 <BOLD>
