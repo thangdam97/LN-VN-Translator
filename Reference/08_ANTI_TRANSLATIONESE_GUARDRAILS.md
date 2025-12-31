@@ -380,6 +380,52 @@ Trước khi hoàn thiện bản dịch cho cảnh học đường, kiểm tra:
 
 ---
 
+### 13. Vi-rút "Lặp Cảm Thán" (Interjection Spam)
+
+**Vấn đề:** AI dùng lại cùng một từ cảm thán ("Trời ạ", "Trời ơi") hoặc dịch cứng cảm thán tiếng Nhật (まったく → "Tuyệt đối") gây nhàm chán và máy móc.
+
+**Giải pháp:** Xoay tua (rotate) từ cảm thán và dùng bản dịch tự nhiên phù hợp với archetype nhân vật.
+
+| NGUỒN (JP) | ❌ SAI_AI (Lặp từ/Dịch cứng) | ✅ ĐÚNG_NGƯỜI (Đa dạng/Tự nhiên) |
+|:-----------|:-----------------------------|:----------------------------------|
+| まったく | "**Tuyệt đối**, thật rắc rối." | "**Haiz**, rắc rối thật." / "**Thiệt tình**, khổ ghê." |
+| ええ！？ | "**Trời ạ**!? Thật sao!?" | "**Ủa**!? Thật sao!?" / "**Hả**!?" / "**Gì cơ**!?" |
+| うそ！？ | "**Trời ạ**!? Không thể nào!" | "**Không đời nào**!?" / "**Điêu**!?" / "**Ảo thế**!?" |
+| もう | "**Trời ơi**, lại nữa à..." | "**Gớm**, lại nữa à..." / "**Haiz**, lại rồi..." |
+| あら | "**Trời ạ**, thật bất ngờ." | "**Ái chà**..." / "**Ô kìa**..." / "**Chẳng hay**..." |
+
+**Quy tắc Chống Lặp:**
+1. **Đếm từ cảm thán:** Nếu "Trời ạ/Trời ơi" xuất hiện > 2 lần trong 1 trang → **BẮT BUỘC** thay thế
+2. **Xoay tua theo mức độ:**
+   - Nhẹ: Ơ? / Ủa? / Hả? / Gì cơ?
+   - Vừa: Cái gì? / Đùa à? / Thật á? / Ảo thế?
+   - Mạnh: Vãi! / Điêu! / Gì vậy trời!
+3. **Match archetype:**
+   - Ojou-sama: "Ái chà", "Ô kìa", "Chẳng hay"
+   - Gyaru/Gen Z: "Vãi", "Điêu", "Ảo thế"
+   - Delinquent: "Khỉ thật", "Chết tiệt"
+   - Onee-san: "Ái chà chà", "Ôi dào"
+
+**Ví dụ Sửa Lỗi:**
+
+❌ **Lặp từ (SAI):**
+```
+"Trời ạ!? Thật sao!?"
+"Trời ạ!? Nghiêm túc đấy à!?"
+"Trời ạ! Không thể tin nổi!"
+```
+
+✅ **Đa dạng (ĐÚNG):**
+```
+"Ủa!? Thật sao!?"
+"Không đời nào!? Nghiêm túc đấy à!?"
+"Điêu vãi! Không tin nổi!"
+```
+
+**Tham khảo:** Xem `15_VIETNAMESE_EXPRESSION_MAPPING.md` để có danh sách đầy đủ các biến thể cảm thán theo archetype.
+
+---
+
 ## LỜI NHẮC CUỐI CÙNG
 
 **Mục tiêu của bạn KHÔNG PHẢI dịch từ. Mục tiêu của bạn là làm cho độc giả Việt Nam QUÊN rằng họ đang đọc bản dịch.**
@@ -389,3 +435,5 @@ Mọi câu nên nghe như nó được **viết gốc bằng tiếng Việt** b�
 **Khi nghi ngờ:** Chọn phiên bản mà một người bạn Việt Nam sẽ nhắn tin cho bạn, không phải những gì từ điển sẽ cho bạn.
 
 **ĐẶC BIỆT CHO SLICE-OF-LIFE HỌC ĐƯỜNG:** Hãy tưởng tượng bạn đang nghe hai học sinh Việt trò chuyện trong giờ ra chơi. Nếu câu thoại nghe không giống thế → viết lại!
+
+**ĐẶC BIỆT CHO CẢM THÁN:** Đừng lặp lại cùng một từ cảm thán > 2 lần trong 1 trang. Xoay tua các biến thể để giữ sự tươi mới và tự nhiên!
