@@ -12,7 +12,7 @@
 
 ## 📖 Giới thiệu
 
-**LN VN-Translator** là hệ thống **Prompt Engineering** chuyên dụng để dịch Light Novel Nhật-Việt đạt chuẩn **S-Tier Transcreation**, được tối ưu hóa cho **Google Gemini 1.5 Pro/Flash**.
+**LN VN-Translator** là hệ thống **Prompt Engineering** chuyên dụng để dịch Light Novel Nhật-Việt chất lượng cao, được tối ưu hóa cho **Google Gemini Pro/Flash**.
 
 ### Tại sao chọn Gemini?
 
