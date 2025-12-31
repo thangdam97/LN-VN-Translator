@@ -6,7 +6,7 @@
 ![Light Novel](https://img.shields.io/badge/Domain-Light%20Novel-ff69b4)
 ![Transcreation](https://img.shields.io/badge/Method-Transcreation-success)
 
-> **"S-Tier Light Novel Localization System driven by Gemini 1.5 Pro"**
+> **"S-Tier Light Novel Localization System driven by Gemini Large-Language Model"**
 
 ---
 
@@ -117,7 +117,7 @@ Hệ thống sử dụng mô hình **"Hybrid Brain-Book"**:
 
 ### Anti-Translationese Guardrails
 
-Tự động loại bỏ các cụm từ robot:
+Tự động loại bỏ các cụm từ "dịch máy":
 - ❌ "Một cách nhanh chóng" → ✅ "Vội vã"
 - ❌ "Có vẻ như anh buồn" → ✅ "Anh buồn"
 - ❌ "Cảm xúc của tôi" → ✅ "Tôi... cảm xúc lộn xộn"
@@ -144,7 +144,7 @@ Tự động loại bỏ các cụm từ robot:
 1. Mở file `VN_TRANSLATOR_MASTER_INSTRUCTION_MINIFIED.xml`
 2. Copy toàn bộ nội dung (từ `<?xml version="1.0"?>` đến `</VN_TRANSLATOR_LOGIC_CORE>`)
 3. Paste vào ô **"Instructions"** của Gem
-4. Kích hoạt **"Chế độ Canvas** trong Default Tools
+4. Kích hoạt **"Chế độ Canvas"** trong Default Tools
 
 #### Bước 3: Upload Knowledge Base
 
@@ -347,7 +347,7 @@ Dự án này được phát triển để cộng đồng dịch thuật Light N
 ## Lịch sử Phiên bản
 
 ### v10.0 (Current) - 31/12/2024
-- ✅ **Rebranding:** V-NEBULA → LN VN-Translator
+- ✅ **Rebranding:** → LN VN-Translator
 - ✅ **License:** Chuyển sang GNU AGPLv3
 - ✅ Tích hợp đầy đủ Boldness Module v1.0
 - ✅ Thêm 12,559 Kanji vào Knowledge Base
@@ -375,12 +375,12 @@ Dự án này được phát triển để cộng đồng dịch thuật Light N
 
 ---
 
-## 🙏 Lời cảm ơn
+## Lời cảm ơn
 
 Cảm ơn cộng đồng dịch thuật Light Novel Việt Nam đã đóng góp ý kiến và phản hồi để hoàn thiện hệ thống này.
 
 **Đặc biệt cảm ơn:**
-- **Kim Đồng Publishing** — Nguồn cảm hứng về văn phong táo bạo
+- **Kim Đồng Publishing** — Nguồn cảm hứng về văn phong táo bạo (Nguồn: Làm Bạn với Cô Gái Xinh Nhì Lớp)
 - **Cộng đồng Gemini Advanced Users** — Feedback về prompt engineering
 - **Các dịch giả đã đóng góp Golden Samples** — Nền tảng chất lượng
 
