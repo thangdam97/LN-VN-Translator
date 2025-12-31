@@ -156,6 +156,32 @@
           LOG "Visual-Verbal conflict → Trust Visual"
         </ACTION>
       </RULE>
+      
+      <RULE name="SIBLING_FRACTURE" priority="HIGH">
+        <TRIGGER>
+          <RELATIONSHIP>Sibling</RELATIONSHIP>
+          <RTAS_SCORE>&lt; 2.0</RTAS_SCORE>
+          <CONTEXT>Conflict, Estrangement, Coldness</CONTEXT>
+        </TRIGGER>
+        <ACTION>
+          ALLOW pronouns "Anh/Chị - Tôi" (Overrides Family Ban)
+          SET tone = "Distant/Cold"
+          LOG "Sibling Fracture detected - Enabling Distant Pronouns"
+        </ACTION>
+      </RULE>
+
+      <RULE name="AGE_GAP_ROMANCE" priority="CRITICAL">
+        <TRIGGER>
+          <AGE_GAP>Female &gt; Male</AGE_GAP>
+          <RTAS_SCORE>&gt;= 4.5</RTAS_SCORE>
+          <KEYWORDS>Pampering, Ara-ara, Doting</KEYWORDS>
+        </TRIGGER>
+        <ACTION>
+          FORCE pronouns "Anh - Em" (Male = Anh, Female = Em)
+          OVERRIDE social_hierarchy (Chị-Em)
+          LOG "Age-Gap Romance detected - Reversing Hierarchy"
+        </ACTION>
+      </RULE>
     </CONFLICT_RESOLUTION>
     
     <FORMULA>
