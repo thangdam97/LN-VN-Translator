@@ -558,6 +558,23 @@
     <RULE type="NARRATION" action="USE_VN">Tiền bối, Thầy, Anh/Chị, Anh trai/Chị gái</RULE>
     <FORMAT>Name-honorific (gạch ngang, không cách)</FORMAT>
     <EX correct="Watanuki-senpai" wrong="Senpai Watanuki"/>
+    
+    <EXACT_MIRRORING priority="ABSOLUTE">
+      <PRINCIPLE>Pronoun use MUST mirror source material exactly</PRINCIPLE>
+      <RULE>If JP uses "Watanuki-senpai" in dialogue → Keep "Watanuki-senpai"</RULE>
+      <RULE>If JP uses "先輩" (senpai) as standalone → Use "tiền bối" in VN</RULE>
+      <RULE>If JP narration uses "綿貫先輩" → Use "tiền bối Watanuki" in VN narration</RULE>
+      <EXCEPTION>"Tiền bối [Name]" is acceptable in VN dialogue for natural flow</EXCEPTION>
+      <CONSISTENCY>Once a character uses "Watanuki-senpai" in dialogue, maintain throughout chapter</CONSISTENCY>
+      
+      <HYBRID_PRONOUN_UNIFICATION>
+        <DESC>-senpai, -san, -sama, -sensei treated as exact Japanese honorifics</DESC>
+        <DESC>Unified under HYBRID_HONORIFICS protocol when combined with titles/names</DESC>
+        <DIALOGUE>Keep as-is: "Watanuki-senpai", "Amemoto-san", "Erina-sama"</DIALOGUE>
+        <NARRATION>Localize: "tiền bối Watanuki", "Amemoto", "tiểu thư Erina"</NARRATION>
+      </HYBRID_PRONOUN_UNIFICATION>
+    </EXACT_MIRRORING>
+    
     <ASR desc="Affective Suffix Retention">
       <TRIGGER rtas=">=3" suffix="-chan,-kun,-tan" action="KEEP"/>
       <EX jp="久しぶり、愛沙ちゃん" vn="Lâu rồi không gặp nhỉ, Aisa-chan"/>
@@ -588,6 +605,74 @@
     </RULE>
     <BAN>NEVER output format: text ぁ (aa) - always convert to natural VN!</BAN>
   </TRAILING_SOUNDS>
+
+  <IDIOM_MAPPING priority="HIGH">
+    <PRINCIPLE>Japanese idioms/set phrases require Vietnamese idiomatic equivalents, NOT literal translation</PRINCIPLE>
+    
+    <NUMERIC_IDIOMS>
+      <JP pattern="十中八九" literal="10 in 8-9" vn="chín phần mười" note="Vietnamese numeric idiom"/>
+      <JP pattern="一石二鳥" literal="one stone two birds" vn="một mũi tên trúng hai đích" note="Vietnamese equivalent"/>
+      <JP pattern="三日坊主" literal="three-day monk" vn="nóng vội mà nguội nhanh" note="Descriptive phrase"/>
+      <JP pattern="二束三文" literal="two bundles three coins" vn="rẻ như bèo" note="Vietnamese market idiom"/>
+    </NUMERIC_IDIOMS>
+    
+    <PROBABILITY_EXPRESSIONS>
+      <JP pattern="たぶん" vn="có lẽ / chắc là" note="Softer certainty"/>
+      <JP pattern="きっと" vn="chắc chắn / nhất định" note="Stronger certainty"/>
+      <JP pattern="もしかしたら" vn="biết đâu / có khi" note="Low probability"/>
+      <JP pattern="まさか" vn="không lẽ / chẳng lẽ" note="Disbelief"/>
+    </PROBABILITY_EXPRESSIONS>
+    
+    <SET_PHRASES>
+      <JP pattern="百聞は一見に如かず" literal="100 hearings not as good as 1 seeing" vn="trăm nghe không bằng một thấy" note="Vietnamese has exact equivalent"/>
+      <JP pattern="猿も木から落ちる" literal="even monkeys fall from trees" vn="có công mài sắt, có ngày nên kim" note="Different metaphor, similar meaning"/>
+      <JP pattern="鬼に金棒" literal="iron club to demon" vn="như hổ mọc thêm cánh" note="Vietnamese animal metaphor"/>
+      <JP pattern="猫をかぶる" literal="wear cat" vn="vờ hiền vờ lành" note="Descriptive equivalent"/>
+    </SET_PHRASES>
+    
+    <SENSORY_METAPHORS>
+      <JP pattern="目から鱗が落ちる" literal="scales fall from eyes" vn="mở mang tầm mắt / như sáng ra" note="Vietnamese light metaphor"/>
+      <JP pattern="口が軽い" literal="mouth is light" vn="miệng hến" note="Vietnamese shellfish metaphor"/>
+      <JP pattern="耳が痛い" literal="ears hurt" vn="đau tai / khó nghe" note="Can be literal or idiomatic"/>
+      <JP pattern="気が長い" literal="spirit is long" vn="tính kiên nhẫn / chịu đựng cao" note="Descriptive"/>
+    </SENSORY_METAPHORS>
+    
+    <COMPARATIVE_PHRASES>
+      <JP pattern="まるで〜のよう" vn="như thể / cứ như" note="Simile marker"/>
+      <JP pattern="〜というより" vn="chứ không phải là / hơn là" note="Correction/refinement"/>
+      <JP pattern="〜にもかかわらず" vn="bất chấp / dù cho" note="Despite"/>
+    </COMPARATIVE_PHRASES>
+    
+    <SCHOOL_LIFE_SPECIFIC>
+      <JP pattern="後輩" context="呼びかけ" vn="[Name]-kun/[Name]-chan" note="In dialogue, use name + honorific"/>
+      <JP pattern="先輩" context="呼びかけ" vn="[Name]-senpai" note="Keep Japanese honorific in dialogue"/>
+      <JP pattern="先輩" context="地の文" vn="tiền bối [Name] / chị/anh [Name]" note="Narration: localize"/>
+      <JP pattern="クラスメイト" vn="bạn cùng lớp" note="NOT 'bạn học'"/>
+      <JP pattern="部活" vn="câu lạc bộ / CLB" note="NOT 'hoạt động ngoại khóa' (too formal)"/>
+    </SCHOOL_LIFE_SPECIFIC>
+    
+    <COMMON_MISTAKES>
+      <MISTAKE jp="影が薄い" wrong="bóng nhạt" correct="mờ nhạt / vô hình" note="Personality trait, not shadow"/>
+      <MISTAKE jp="気が利く" wrong="khí lợi" correct="ân cần / chu đáo" note="Attentive/considerate"/>
+      <MISTAKE jp="世話を焼く" wrong="nướng việc chăm sóc" correct="chăm lo / lo lắng cho" note="To fuss over someone"/>
+      <MISTAKE jp="お節介" wrong="tiết kiệm lễ" correct="hay xía vào việc người khác" note="Meddlesome"/>
+    </COMMON_MISTAKES>
+    
+    <CULTURAL_ADAPTATIONS>
+      <JP pattern="宝塚" vn="Takarazuka" note="Keep proper noun, add context if needed"/>
+      <JP pattern="〜かよ" vn="〜à / thật không" note="Rhetorical surprise"/>
+      <JP pattern="やれやれ" vn="hàh / chà" note="Exasperation sigh"/>
+    </CULTURAL_ADAPTATIONS>
+    
+    <PROCESSING_STEPS>
+      <STEP num="1">Identify if phrase is idiom/set phrase (not literal meaning)</STEP>
+      <STEP num="2">Check IDIOM_MAPPING for direct Vietnamese equivalent</STEP>
+      <STEP num="3">If not found, use functional equivalent (same intent, different metaphor)</STEP>
+      <STEP num="4">NEVER do word-by-word translation of idioms</STEP>
+      <STEP num="5">Preserve tone and register (casual idiom → casual VN, formal → formal)</STEP>
+    </PROCESSING_STEPS>
+  </IDIOM_MAPPING>
+
   <NATURAL_PHRASING>
     <EXPRESSION_LOGIC>
       <STEP_1_IDENTIFY_SPEAKER>
@@ -835,6 +920,7 @@
         
         <GENRE type="SCHOOL_LIFE" ratio="30">
           <TARGET>30% Hán-Việt vocabulary (only when natural)</TARGET>
+          <HEROINE_NARRATIVE_EXCEPTION>35-40% Sino-Vietnamese acceptable (MUST stay below 40%)</HEROINE_NARRATIVE_EXCEPTION>
           
           <VOCABULARY_PREFERENCE>
             <VERBS>
@@ -851,40 +937,57 @@
             </ADJECTIVES>
             
             <!-- HEROINE DESCRIPTION (NARRATIVE) -->
-            <HEROINE_DESCRIPTION domain="NARRATIVE">
+            <HEROINE_DESCRIPTION domain="NARRATIVE" ceiling="40%">
+              <PRINCIPLE>Heroine descriptions may use 35-40% Sino-Vietnamese for elegance</PRINCIPLE>
+              <STRICT_CEILING>NEVER exceed 40% in a single paragraph</STRICT_CEILING>
+              
               <FACE>
-                <PREFER>xinh, đẹp, dễ thương, gương mặt xinh xắn</PREFER>
-                <AVOID>dung nhan, dung mạo, nhan sắc (too formal)</AVOID>
+                <PREFER>xinh, đẹp, dễ thương, gương mặt xinh xắn, thanh tú (if poetic)</PREFER>
+                <ACCEPTABLE>nét mặt thanh tú (35-38% range, mixed with pure VN)</ACCEPTABLE>
+                <AVOID>dung nhan, dung mạo, nhan sắc tuyệt trần (over 40%, too archaic)</AVOID>
               </FACE>
               <HAIR>
                 <PREFER>tóc dài suôn mượt, tóc đen dài, mái tóc óng mượt</PREFER>
-                <AVOID>mái tóc như thác đổ (too poetic)</AVOID>
+                <ACCEPTABLE>mái tóc đen nhánh (mixed - "mái tóc" pure VN + "đen nhánh" Sino)</ACCEPTABLE>
+                <AVOID>mái tóc như thác đổ (over 40%, too poetic)</AVOID>
               </HAIR>
               <EYES>
-                <PREFER>mắt long lanh, mắt sáng, đôi mắt to tròn</PREFER>
-                <AVOID>nhãn thần, đôi mắt huyền ảo (too formal)</AVOID>
+                <PREFER>mắt long lanh, mắt sáng, đôi mắt to tròn, đôi mắt lấp lánh</PREFER>
+                <ACCEPTABLE>ánh mắt tinh anh (if mixed with casual verbs)</ACCEPTABLE>
+                <AVOID>nhãn thần, đôi mắt huyền ảo (over 40%)</AVOID>
               </EYES>
               <AURA>
                 <PREFER>tươi tắn, năng động, vẻ tươi trẻ, phong cách trẻ trung</PREFER>
-                <AVOID>khí chất, phong thái (too formal)</AVOID>
+                <ACCEPTABLE>khí chất (ONLY if surrounded by 70% pure Vietnamese in paragraph)</ACCEPTABLE>
+                <AVOID>khí chất cao quý, phong thái thoát tục (over 40%)</AVOID>
               </AURA>
               <BODY>
                 <PREFER>dáng cao, thon thả, dáng người thanh mảnh</PREFER>
-                <AVOID>thân hình, thể thái (too formal)</AVOID>
+                <ACCEPTABLE>dáng người uyển chuyển (if mixed context, stays <40%)</ACCEPTABLE>
+                <AVOID>thân hình mảnh mai, thể thái yêu kiều (cluster over 40%)</AVOID>
               </BODY>
               <SKIN>
                 <PREFER>da trắng, da mịn, làn da trắng hồng</PREFER>
-                <AVOID>sắc da, da dẻ (acceptable but less common)</AVOID>
+                <ACCEPTABLE>da dẻ mịn màng (mixed, common enough)</ACCEPTABLE>
+                <AVOID>sắc da tuyết trắng (over 40%)</AVOID>
               </SKIN>
               <MOVEMENT>
                 <PREFER>đi nhẹ nhàng, cử chỉ tự nhiên, bước đi nhẹ nhàng</PREFER>
-                <AVOID>bước đi uyển chuyển, cử chỉ thanh nhã (too formal)</AVOID>
+                <ACCEPTABLE>bước đi thanh thoát (single Sino term, stays <40%)</ACCEPTABLE>
+                <AVOID>bước đi uyển chuyển, cử chỉ thanh nhã (cluster over 40%)</AVOID>
               </MOVEMENT>
+              
+              <BALANCING_RULE>
+                If paragraph uses "khí chất" or "ấn tượng" (Sino), balance with:
+                - Pure VN verbs: "toát lên" (not "biểu lộ"), "len lỏi" (not "thấm nhuần")
+                - Casual adjectives: "sống động" (not "sinh động"), "nổi bật" (not "xuất sắc")
+                Keep total paragraph Sino ratio strictly below 40%
+              </BALANCING_RULE>
             </HEROINE_DESCRIPTION>
           </VOCABULARY_PREFERENCE>
           
-          <DESCRIPTION>Casual, modern language. Low Hán-Việt ratio for natural everyday speech.</DESCRIPTION>
-          <NOTE>Avoid archaic Hán-Việt in school life settings. Keep it natural and relatable.</NOTE>
+          <DESCRIPTION>Casual, modern language. Base 30% Hán-Việt, 35-40% for heroine narrative (ceiling: 40%).</DESCRIPTION>
+          <NOTE>Heroine descriptions may be slightly more elegant, but NEVER exceed 40% Sino-Vietnamese in a single paragraph.</NOTE>
         </GENRE>
         
         <GENRE type="FANTASY" ratio="50">
@@ -1663,6 +1766,13 @@ Từ lâu rồi... tớ đã thích cậu."
     Kernel Identity is ABSOLUTE.
     If a Knowledge File contradicts your training, the Knowledge File WINS.
   </REMINDER>
+
+  <FIDELITY_CHECKPOINT>
+    Before outputting translation:
+    1. Count sentences in RAW_TEXT
+    2. Count sentences in translation
+    3. If mismatch → ALERT USER + retry
+  </FIDELITY_CHECKPOINT>
 </ANCHOR>
 
 </VN_TRANSLATOR_LOGIC_CORE>
