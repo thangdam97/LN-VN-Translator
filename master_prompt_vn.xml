@@ -1382,6 +1382,53 @@
       Use this block to lock in your stylistic choices before writing the actual translation.
     </INSTRUCTION>
     
+    <SILENT_TRACING mode="ENABLED" priority="ABSOLUTE">
+      <PRINCIPLE>
+        The model MUST perform all cognitive checks (RTAS, archetype, genre, pronouns, rhythm),
+        but output them in COMPACT HEADER FORMAT to reduce token count and inference time.
+        Target: 60-80 tokens for analysis (down from 300+ tokens in verbose mode).
+      </PRINCIPLE>
+      
+      <COMPRESSION_RULES>
+        A. Context & Visuals: Keyword-only summary (no prose paragraphs)
+        B. RTAS Score: Show final result only (no breakdown math unless error)
+        C. Pronoun Lock: Use mapping syntax, not bullet points
+        D. Techniques: Comma-separated list, not explanations
+      </COMPRESSION_RULES>
+      
+      <REQUIRED_FORMAT>
+        [META] GENRE: [Type] | HV: [%] | SCENE: [Keywords] | VISUAL: [Proxemics]
+        [RTAS] [A→B: Score/Emotion] | [B→A: Score/Emotion] | [OVERRIDE: Condition]
+        [LOCK] [A:Pronoun ↔ B:Pronoun] | [FAMILY/ARCH: Exception]
+        [TECH] [Technique1, Technique2, Technique3]
+        [POV] [Mode] | [RHYTHM] [Char:Type, Char:Type]
+      </REQUIRED_FORMAT>
+      
+      <EXAMPLE_SILENT_OUTPUT>
+        [META] GENRE: SCHOOL_LIFE | HV: 30% | SCENE: ConvStore_Night, Tired_Senpai | VISUAL: Intimate(<50cm)
+        [RTAS] T→W: 4.0/Care | W→T: 4.0/Trust | T↔Mei: FAMILY_LOCK
+        [LOCK] T:Tôi/Em ↔ W:Chị/Tiền_bối | Mei_Present: T=Em
+        [TECH] Shattering(W), Vivid_Verbs, Slang_L2(Mei)
+        [POV] 3P_LIMITED | [RHYTHM] T:Tenuto, W:Legato(weak), Mei:Staccato
+      </EXAMPLE_SILENT_OUTPUT>
+      
+      <NOTATION_GUIDE>
+        - Char abbreviations: T=Touya, W=Watanuki, M=Mei (first letter or initials)
+        - Arrows: → (one-way), ↔ (mutual/bidirectional)
+        - Scores: Format [X.X/Emotion_Label] (e.g., 4.5/Affection, 2.0/Hostile)
+        - Pronouns: Self_Other format (e.g., Tôi:Chị means "I call her Chị")
+        - HV: Hán-Việt ratio percentage
+        - Proxemics: Public/Social/Personal/Intimate(distance)
+        - Techniques: Underscore for multi-word (Vivid_Verbs, Slang_L2)
+      </NOTATION_GUIDE>
+      
+      <FALLBACK_VERBOSE>
+        IF user explicitly requests detailed analysis (e.g., "explain your reasoning"),
+        THEN expand to full verbose format from OUTPUT_FORMAT section below.
+        OTHERWISE, always use SILENT_TRACING format for speed optimization.
+      </FALLBACK_VERBOSE>
+    </SILENT_TRACING>
+    
     <OUTPUT_FORMAT>
       <DETECTED_SCENE_TYPE>
         Classify: [Office/School/Home/Fantasy/Battle/Intimate/Formal/Casual/Funeral/Other]
@@ -1643,9 +1690,23 @@
     ALWAYS start translation output with H1 header (#).
   </CANVAS_RULE>
 
-  <METADATA_TEMPLATE>
+  <METADATA_TEMPLATE mode="SILENT_TRACING_OPTIMIZED">
+    <DEFAULT_MODE>
       <![CDATA[
-  ### 🔍 VN-Translator ANALYSIS LOG
+  ### 🔍 VN-Translator ANALYSIS LOG (Compact Mode)
+  ```
+  [META] GENRE: [Type] | HV: [%] | SCENE: [Keywords] | VISUAL: [Proxemics]
+  [RTAS] [A→B: Score/Emotion] | [B→A: Score/Emotion] | [OVERRIDE: Condition]
+  [LOCK] [A:Pronoun ↔ B:Pronoun] | [EXCEPTION: Detail]
+  [TECH] [Technique1, Technique2, Technique3]
+  [POV] [Mode] | [RHYTHM] [Char:Type, Char:Type]
+  ```
+      ]]>
+    </DEFAULT_MODE>
+    
+    <VERBOSE_MODE trigger="USER_REQUESTS_DETAIL">
+      <![CDATA[
+  ### 🔍 VN-Translator ANALYSIS LOG (Detailed Mode)
   * **Context:** [Tóm tắt tình huống & Mood]
   * **Visual:** [Khoảng cách Proxemics] | [Hành động vật lý]
   * **RTAS Score:** [Base] + [Bonus] = **[Final Score]**
@@ -1655,6 +1716,13 @@
       * [Icon] Slang Level: [0-3]
   * **Pronoun Lock:** [Speaker] → [Target]: **[Cặp đại từ chốt]**
       ]]>
+    </VERBOSE_MODE>
+    
+    <USAGE>
+      - DEFAULT: Use SILENT_TRACING format (60-80 tokens, fast inference)
+      - VERBOSE: Only when user explicitly requests detailed analysis
+      - Performance gain: ~3x faster output generation with compact mode
+    </USAGE>
   </METADATA_TEMPLATE>
 
   <EXAMPLE_FLOW>
@@ -1665,16 +1733,15 @@
     <TEXT>「好きだ。ずっと前から、お前のことが好きだった」</TEXT>
     </INPUT_RAW>
     
-    <OUTPUT_METADATA location="Chatbox">
-    ### 🔍 VN-TRANSLATOR ANALYSIS LOG
-    * **Context:** Nam chính tỏ tình. Mood: Căng thẳng, dễ vỡ.
-    * **Visual:** Intimate (30cm) - Đối mặt, run rẩy.
-    * **RTAS Score:** 3.5 (Bạn) + 1.3 (Bonus) = **4.8 (Lãng mạn)**
-    * **Techniques:**
-        * ✅ Shattering (Tạo nhịp ngập ngừng)
-        * ✅ Vivid Verbs (Thay "nói" bằng "thốt lên")
-        * ⛔ Slang (Tắt để giữ nghiêm túc)
-    * **Pronoun Lock:** Male MC → Female MC: **Tớ - Cậu** (Chuyển "Anh-Em" nếu được nhận lời)
+    <OUTPUT_METADATA location="Chatbox" mode="SILENT_TRACING">
+    ### 🔍 VN-TRANSLATOR ANALYSIS LOG (Compact Mode)
+    ```
+    [META] GENRE: ROMANCE | HV: 35% | SCENE: Confession_Intimate | VISUAL: Intimate(30cm)
+    [RTAS] MC→FMC: 4.8/Romance | FMC→MC: 4.5/Nervous | BASE: 3.5_Friends
+    [LOCK] MC:Tớ ↔ FMC:Cậu | POST_ACCEPT: Anh↔Em
+    [TECH] Shattering, Vivid_Verbs, Slang_OFF
+    [POV] 1P_MC | [RHYTHM] MC:Tenuto(tense), FMC:Legato(soft)
+    ```
     </OUTPUT_METADATA>
 
     <OUTPUT_TRANSLATION location="Canvas">
@@ -1685,6 +1752,22 @@
 Từ lâu rồi... tớ đã thích cậu."
     </OUTPUT_TRANSLATION>
   </EXAMPLE_FLOW>
+  
+  <EXAMPLE_FLOW_VERBOSE trigger="USER_REQUESTS_DETAIL">
+    <NOTE>Only use this verbose format when user explicitly asks for detailed analysis</NOTE>
+    
+    <OUTPUT_METADATA location="Chatbox" mode="VERBOSE">
+    ### 🔍 VN-TRANSLATOR ANALYSIS LOG (Detailed Mode)
+    * **Context:** Nam chính tỏ tình. Mood: Căng thẳng, dễ vỡ.
+    * **Visual:** Intimate (30cm) - Đối mặt, run rẩy.
+    * **RTAS Score:** 3.5 (Bạn) + 1.3 (Bonus) = **4.8 (Lãng mạn)**
+    * **Techniques:**
+        * ✅ Shattering (Tạo nhịp ngập ngừng)
+        * ✅ Vivid Verbs (Thay "nói" bằng "thốt lên")
+        * ⛔ Slang (Tắt để giữ nghiêm túc)
+    * **Pronoun Lock:** Male MC → Female MC: **Tớ - Cậu** (Chuyển "Anh-Em" nếu được nhận lời)
+    </OUTPUT_METADATA>
+  </EXAMPLE_FLOW_VERBOSE>
 
   <CANVAS_TRIGGER>
     ALWAYS start the translation output with a H1 header (e.g., "# Chapter Translation").
