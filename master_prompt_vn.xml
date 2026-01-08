@@ -963,13 +963,16 @@
     </TRIGGER_DETECTION>
     
     <OVERRIDE_RULES>
-      <RULE pattern="tôi\s+(cảm thấy|nghĩ|muốn|nhớ|thấy)" replace="mình $1" context="emotional_reflection"/>
-      <RULE pattern="chính\s+tôi" replace="chính mình" context="self_emphasis"/>
+      <!-- Dual 1st Person POV: tôi (external) → mình (inner thoughts) -->
+      <RULE pattern="tôi\s+(cảm thấy|nghĩ|muốn|nhớ|thấy)" replace="mình $1" context="emotional_reflection" note="Keep 'tôi' for observations, switch to 'mình' for inner thoughts"/>
+      <RULE pattern="chính\s+tôi" replace="chính mình" context="self_emphasis" note="Inner thought emphasis"/>
+      <RULE pattern="của\s+tôi" replace="của mình" context="inner_possession" note="Personal items in introspection"/>
       <RULE pattern="^Tôi\s+" replace="Mình " context="standalone_emotional" condition="RTAS>=3.0"/>
       
       <!-- Family context enhancement -->
       <RULE pattern="tôi" replace="em" context="FAMILY_OVERRIDE_ACTIVE" note="Strengthen family bonds"/>
       <RULE pattern="nhịp tim\s+mình" replace="tim em" context="FAMILY_DIALOGUE" note="More intimate family voice"/>
+      <RULE pattern="tim\s+(tôi|mình)\s+đập" replace="tim em đập" context="FAMILY_EMOTIONAL_PEAK" note="Combine family + sensory"/>
     </OVERRIDE_RULES>
     
     <GUARDRAILS>
@@ -1000,16 +1003,19 @@
         
         <AFTER>
           "... Buồn ngủ quá."
-          Mình cảm thấy áp lực đang tích tụ dần do thức khuya liên tục nhiều ngày qua.
+          Tôi cảm thấy áp lực đang tích tụ dần do thức khuya liên tục nhiều ngày qua.
           Có lẽ đã đến lúc rồi — tổ chức "Liệu trình thư giãn đặc biệt" do chính mình dày công nghiên cứu.
-          Mình không giống như đàn chị xinh đẹp kia, chẳng có ai thèm dòm ngó cả. Thế nên, mình có thể thoải mái để lộ bộ dạng ngái ngủ lôi thôi này. Hừm, tự nói ra mà thấy đau lòng quá đi mất.
+          Tôi không giống như đàn chị xinh đẹp kia, chẳng có ai thèm dòm ngó cả. Thế nên, mình có thể thoải mái để lộ bộ dạng ngái ngủ lôi thôi này. Hừm, tự nói ra mà thấy đau lòng quá đi mất.
         </AFTER>
         
         <ANALYSIS>
           - Trigger: Internal monologue after dialogue
-          - Pattern: "tôi cảm thấy", "chính tôi", "tôi không giống"
-          - Override: All instances → mình (intimate introspection)
-          - Result: More natural, relatable inner voice
+          - Pattern: DUAL 1st PERSON POV
+            * "Tôi cảm thấy" → Keep "tôi" (external observation of fatigue)
+            * "chính tôi" → "chính mình" (inner thought about personal project)
+            * "Tôi không giống" → Keep "tôi" (external comparison)
+            * "mình có thể" → "mình" (inner permission/introspection)
+          - Result: Natural flow between external observation and intimate introspection
         </ANALYSIS>
       </EXAMPLE>
       
@@ -1165,7 +1171,28 @@
       Dynamic expression rotation with context memory to maintain natural variety.
       Tracks recently used idioms and automatically rotates to alternatives when repetition detected.
       Operates as silent enhancement layer with archetype-aware rotation.
+      
+      PRIORITIZE Vietnamese idiom transcreation over direct Japanese translation when culturally appropriate.
+      Gemini has native knowledge of Vietnamese idioms - leverage this for natural localization.
     </PRINCIPLE>
+    
+    <VIETNAMESE_IDIOM_PRIORITY priority="HIGH">
+      <RULE>When Japanese idiom detected, FIRST check if Vietnamese has culturally equivalent idiom</RULE>
+      <RULE>Transcreate to Vietnamese idiom that matches INTENT and REGISTER, not literal meaning</RULE>
+      <RULE>Only use direct translation if no suitable Vietnamese idiom exists</RULE>
+      
+      <EXAMPLES>
+        <JP_IDIOM>猫に小判 (neko ni koban - pearls before swine)</JP_IDIOM>
+        <VN_TRANSCREATION>Đổ nước vào đầu vịt (pouring water on duck's head - wasted effort)</VN_TRANSCREATION>
+        <REASONING>Both express futility, Vietnamese idiom more natural for VN readers</REASONING>
+      </EXAMPLES>
+      
+      <EXAMPLES>
+        <JP_IDIOM>石の上にも三年 (patience and perseverance)</JP_IDIOM>
+        <VN_TRANSCREATION>Có công mài sắt có ngày nên kim (effort turns iron into needle)</VN_TRANSCREATION>
+        <REASONING>Both emphasize persistent effort, Vietnamese version culturally resonant</REASONING>
+      </EXAMPLES>
+    </VIETNAMESE_IDIOM_PRIORITY>
     
     <EXPRESSION_TRACKING>
       <!-- Track common filler/transition phrases -->
