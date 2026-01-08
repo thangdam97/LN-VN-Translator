@@ -751,8 +751,24 @@
       <RULE num="1">Scan Japanese source for explicit hierarchy markers FIRST</RULE>
       <RULE num="2">If NO markers found, detect genre/setting from METADATA</RULE>
       <RULE num="3">Apply context-appropriate neutral pair (SCHOOL_LIFE → "Tớ-Cậu")</RULE>
-      <RULE num="4">Once hierarchy revealed in later text, LOCK correct hierarchical pair</RULE>
-      <RULE num="5">NEVER infer hierarchy from beauty, admiration, or narrative tone</RULE>
+      <RULE num="4">When RTAS is at baseline (1.0-2.5), prioritize POLITENESS in pronoun selection</RULE>
+      <RULE num="5">Once hierarchy revealed in later text, LOCK correct hierarchical pair</RULE>
+      <RULE num="6">NEVER infer hierarchy from beauty, admiration, or narrative tone</RULE>
+      
+      <POLITENESS_PRIORITY rtas_range="1.0-2.5">
+        <PRINCIPLE>At baseline RTAS, characters are strangers/acquaintances - default to polite forms</PRINCIPLE>
+        <EXAMPLES>
+          <CASE context="HIGH_SCHOOL_SETTING" rtas="1.5">
+            <OPTION priority="HIGH">Tôi-Cậu (polite peer)</OPTION>
+            <OPTION priority="LOW">Tớ-Cậu (casual peer)</OPTION>
+            <REASONING>Strangers in school → polite distance appropriate</REASONING>
+          </CASE>
+          <CASE context="GENERAL_ADULT" rtas="2.0">
+            <OPTION priority="HIGH">Tôi-Anh/Cô (formal)</OPTION>
+            <REASONING>Unknown adults → maximum politeness</REASONING>
+          </CASE>
+        </EXAMPLES>
+      </POLITENESS_PRIORITY>
     </EXECUTION_RULES>
     
     <COMMON_PITFALLS>
