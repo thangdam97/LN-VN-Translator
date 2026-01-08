@@ -38,7 +38,7 @@ build/
 
 # Claude development files (session-specific, not for version control)
 .claude-session-start.txt
-.clauderc
+#.clauderc
 .clauderc-backups/
 CLAUDE-GUIDELINES.md
 CLAUDE-SETUP-GUIDE.txt
@@ -58,3 +58,4 @@ README_OLD.md
 COPYRIGHTED_MATERIALS/
 Examples/COPYRIGHTED_MATERIAL/
 *.docx
+EPUB_REBUILDING/

@@ -716,6 +716,202 @@
     </FAMILY_CHAN_EXCEPTION>
   </RTAS>
 
+  <UNKNOWN_HIERARCHY_PROTOCOL priority="HIGH">
+    <PRINCIPLE>
+      When character age/social hierarchy is UNKNOWN or AMBIGUOUS, 
+      use FORMAL NEUTRAL pronouns based on genre context.
+      
+      Do NOT assume hierarchy from:
+        - Narrative descriptions (e.g., "chị em" = sisters as a pair, NOT speaker's siblings)
+        - Physical appearance (beauty, maturity, elegance)
+        - Social status (popularity, wealth, fame)
+        - Emotional tone (admiration, respect in narration)
+      
+      ONLY establish hierarchy from EXPLICIT markers in Japanese source:
+        - Stated age/grade: "一年生" (1st year), "二年生" (2nd year), "18歳"
+        - Japanese honorifics: "先輩" (senpai), "後輩" (kouhai), "年上" (older)
+        - Direct narrative statement: "彼女は俺より年上だ" (she's older than me)
+        - Social titles: "部長" (club president), "生徒会長" (student council president)
+    </PRINCIPLE>
+    
+    <TRIGGER_CONDITIONS>
+      <CONDITION>First encounter between non-family characters</CONDITION>
+      <CONDITION>No explicit age/grade/rank stated for OTHER character in Japanese source</CONDITION>
+      <CONDITION>Narrative describes characters but lacks hierarchy markers</CONDITION>
+      <CONDITION>Japanese dialogue uses plain greetings without honorifics (おはよう, こんにちは)</CONDITION>
+    </TRIGGER_CONDITIONS>
+    
+    <FORMAL_NEUTRAL_PAIRS_BY_CONTEXT>
+      <PAIR context="HIGH_SCHOOL_SETTING" self="Tớ" other="Cậu" note="Peer assumption safe in school context"/>
+      <PAIR context="GENERAL_ADULT" self="Tôi" other="Anh/Cô" note="Formal default"/>
+      <PAIR context="WORKPLACE" self="Tôi" other="Anh/Chị" note="Professional neutral"/>
+    </FORMAL_NEUTRAL_PAIRS_BY_CONTEXT>
+    
+    <EXECUTION_RULES>
+      <RULE num="1">Scan Japanese source for explicit hierarchy markers FIRST</RULE>
+      <RULE num="2">If NO markers found, detect genre/setting from METADATA</RULE>
+      <RULE num="3">Apply context-appropriate neutral pair (SCHOOL_LIFE → "Tớ-Cậu")</RULE>
+      <RULE num="4">Once hierarchy revealed in later text, LOCK correct hierarchical pair</RULE>
+      <RULE num="5">NEVER infer hierarchy from beauty, admiration, or narrative tone</RULE>
+    </EXECUTION_RULES>
+    
+    <COMMON_PITFALLS>
+      <PITFALL type="NARRATIVE_CONFUSION">
+        <DESC>Confusing "姉妹" (sisters/siblings as a pair) with sibling relationship to speaker</DESC>
+        <JP_SOURCE>「新条さんたち──俺が通う高校に在籍している双子の美人姉妹のことだ」</JP_SOURCE>
+        <ANALYSIS>
+          - "美人姉妹" = beautiful twin sisters (describing THEM as a pair)
+          - NOT: speaker's older sisters
+          - NO hierarchy marker between speaker and them
+        </ANALYSIS>
+        <WRONG_INFERENCE>Narrative says "姉妹" → Speaker must be younger → Use "Em-Chị"</WRONG_INFERENCE>
+        <CORRECT>No hierarchy established → Use school peer default "Tớ-Cậu"</CORRECT>
+      </PITFALL>
+      
+      <PITFALL type="BEAUTY_BIAS">
+        <DESC>Assuming beautiful/admired characters are older/superior</DESC>
+        <JP_SOURCE>「二人ともそこらのアイドルでは到底太刀打ち出来ないほどの美貌とスタイルを誇っており」</JP_SOURCE>
+        <ANALYSIS>
+          - Describes their beauty and idol-level appearance
+          - Speaker admires them
+          - BUT: No age/rank comparison stated
+        </ANALYSIS>
+        <WRONG_INFERENCE>They're described as goddesses → Must be senpai → Use "Em-Chị"</WRONG_INFERENCE>
+        <CORRECT>Beauty ≠ age hierarchy → Use neutral pair until confirmed</CORRECT>
+      </PITFALL>
+      
+      <PITFALL type="HONORIFIC_ABSENCE">
+        <DESC>Plain greetings without honorifics indicate peer-level interaction</DESC>
+        <JP_SOURCE>
+          『おはようございます』
+          『おっはよう～』
+        </JP_SOURCE>
+        <ANALYSIS>
+          - Plain "おはよう" (good morning) - no さん, no 先輩, no 様
+          - Casual elongation "おっはよう～" suggests friendly peer tone
+          - If they were senpai, would likely use "おはようございます、先輩"
+        </ANALYSIS>
+        <WRONG_INFERENCE>They're popular beauties → Must be senior → "Em chào hai chị ạ"</WRONG_INFERENCE>
+        <CORRECT>Plain greeting + school context → Peer level → "Chào hai cậu"</CORRECT>
+      </PITFALL>
+    </COMMON_PITFALLS>
+    
+    <ICL_EXAMPLES source="PROLOGUE - 男嫌いな美人姉妹">
+      <EXAMPLE id="GREETING_SCENE" lines="50-54">
+        <CONTEXT>
+          - Speaker: Hayato (堂本隼人), Grade 10 (一年生) at Akagi High School
+          - Characters: Shinjou twins (新条姉妹), high school students, grade UNKNOWN
+          - Relationship: Neighbors (近所), casual acquaintances
+          - Setting: Morning greeting on the street
+        </CONTEXT>
+        
+        <JP_SOURCE>
+          『おはようございます』
+          『おっはよう～』
+          
+          近所に住むからこその些細なやり取り、しかし彼女たちのような美人姉妹と僅かとはいえ、言葉を交わせるとその日は頑張れそうだと思えるから俺も単純である。
+        </JP_SOURCE>
+        
+        <HIERARCHY_ANALYSIS>
+          ✗ NO "先輩" (senpai) marker
+          ✗ NO "後輩" (kouhai) marker
+          ✗ NO age comparison stated
+          ✗ NO grade level stated for twins
+          ✓ Plain "おはよう" greeting (peer-level)
+          ✓ School setting (同じ高校 = same high school)
+          ✓ Casual neighbor interaction (些細なやり取り)
+          
+          VERDICT: Hierarchy UNKNOWN → Use peer-level neutral pronouns
+        </HIERARCHY_ANALYSIS>
+        
+        <AI_ERROR>
+          "Em chào hai chị ạ."
+          
+          ERROR_TYPE: Assumed hierarchy from narrative description
+          ERROR_CAUSE: Saw "美人姉妹" (beautiful sisters) + admiration tone → incorrectly inferred they are older
+        </AI_ERROR>
+        
+        <CORRECT_OUTPUT>
+          "Chào hai cậu."
+          
+          REASONING:
+          - High school setting detected (SCHOOL_LIFE genre)
+          - No hierarchy markers in Japanese source
+          - Plain greeting without honorifics
+          - Default to peer-level "Tớ-Cậu" pair
+          - RTAS ~2.0 (neighbors, baseline) → neutral tone, no warmth particles
+        </CORRECT_OUTPUT>
+        
+        <FUTURE_HIERARCHY_LOCK>
+          IF later revealed: "新条姉妹は二年生だ" (twins are 2nd years)
+          THEN switch to: "Em chào hai chị" (now hierarchy is confirmed)
+          AND lock for remainder of work
+        </FUTURE_HIERARCHY_LOCK>
+      </EXAMPLE>
+      
+      <EXAMPLE id="NARRATOR_DESCRIPTION" lines="44-48">
+        <CONTEXT>
+          Hayato's internal narration describing the Shinjou twins
+        </CONTEXT>
+        
+        <JP_SOURCE>
+          新条さんたち──俺が通う高校に在籍している双子の美人姉妹のことだ。
+          
+          二人ともそこらのアイドルでは到底太刀打ち出来ないほどの美貌とスタイルを誇っており、それほどの美人なのだから告白された回数も数知れず……しかしその全てを断るという鉄壁ぶりで有名だ。
+          
+          そんな美人姉妹が住んでいる家の更に先に行ったところが俺の家で、近所ということもあって挨拶をすることも少なくはない。
+        </JP_SOURCE>
+        
+        <HIERARCHY_ANALYSIS>
+          ✗ NO age stated (just "高校に在籍" = enrolled in high school)
+          ✗ NO grade comparison
+          ✗ NO "年上" (older) or "年下" (younger) markers
+          ✓ Same school (俺が通う高校 = the high school I attend)
+          ✓ Neighbors (近所)
+          ✓ Uses "さん" suffix (polite but neutral, NOT "先輩")
+          
+          VERDICT: Hierarchy UNKNOWN despite detailed description
+        </HIERARCHY_ANALYSIS>
+        
+        <TRAP>
+          TEMPTING but WRONG inference:
+          "They're described as idol-level beauties + famous + admired → Must be older/superior"
+          
+          CORRECT approach:
+          Beauty and fame are CHARACTER TRAITS, not HIERARCHY MARKERS
+          Wait for explicit age/grade reveal before using hierarchical pronouns
+        </TRAP>
+      </EXAMPLE>
+    </ICL_EXAMPLES>
+    
+    <INTEGRATION_WITH_EXISTING_SYSTEMS>
+      <RTAS_INTEGRATION>
+        - Unknown Hierarchy Protocol determines WHICH pair to use (Tớ-Cậu vs Em-Anh)
+        - RTAS score determines formality LEVEL within that pair
+        - Example: RTAS 2.0 + Unknown → "Chào cậu" (neutral, no particles)
+        - Example: RTAS 3.8 + Unknown → "Chào cậu nha~" (friendly peer)
+      </RTAS_INTEGRATION>
+      
+      <ARCHETYPE_INTEGRATION>
+        - If archetype specifies pair (e.g., OJOU = "Ta-Ngươi"), archetype wins
+        - Unknown Hierarchy only applies when archetype pair is ∅ (empty/default)
+      </ARCHETYPE_INTEGRATION>
+      
+      <HONORIFIC_SYSTEM_INTEGRATION>
+        - Japanese honorifics in dialogue are EXPLICIT hierarchy markers
+        - "先輩" in source → IMMEDIATELY switch to "Em-Anh/Chị" pair
+        - Plain names with -san → Neutral, wait for hierarchy confirmation
+      </HONORIFIC_SYSTEM_INTEGRATION>
+    </INTEGRATION_WITH_EXISTING_SYSTEMS>
+    
+    <PRIORITY_ORDER>
+      1. FAMILY_OVERRIDE (if family relationship confirmed)
+      2. ARCHETYPE_VOICE_LOCK (if archetype has non-∅ pair attribute)
+      3. UNKNOWN_HIERARCHY_PROTOCOL (if hierarchy unclear)
+      4. RTAS PAIR_MAP (standard relationship-based selection with known hierarchy)
+    </PRIORITY_ORDER>
+  </UNKNOWN_HIERARCHY_PROTOCOL>
+
   <HONORIFICS strategy="DIALOGUE=JP|NARRATION=VN">
     <RULE type="DIALOGUE" action="KEEP_JP">Senpai, Sensei, -san, -kun, -chan, Onii-chan</RULE>
     <RULE type="NARRATION" action="USE_VN">Tiền bối, Thầy, Anh/Chị, Anh trai/Chị gái</RULE>
